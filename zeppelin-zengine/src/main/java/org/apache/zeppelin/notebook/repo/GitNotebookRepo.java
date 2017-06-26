@@ -100,6 +100,25 @@ public class GitNotebookRepo extends VFSNotebookRepo {
     return revision;
   }
 
+  @Override
+  public void remove(String noteId, AuthenticationInfo subject) throws IOException {
+    super.remove(noteId, subject);
+
+    try {
+      List<DiffEntry> gitDiff = git.diff().call();
+      if (!gitDiff.isEmpty()) {
+        LOG.debug("Changes found for pattern '{}': {}", noteId, gitDiff);
+        DirCache added = git.add().addFilepattern(noteId).call();
+        LOG.debug("{} changes are about to be commited", added.getEntryCount());
+        git.commit().setMessage("Removed note: " + noteId).call();
+      } else {
+        LOG.debug("No changes found for {}", noteId);
+      }
+    } catch (GitAPIException e) {
+      LOG.error("Failed to remove+commit {} to Git", noteId, e);
+    }
+  }
+
   /**
    * the idea is to:
    * 1. stash current changes
