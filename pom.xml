@@ -148,6 +148,7 @@
 
     <!-- to be able to exclude some tests using command line -->
     <tests.to.exclude/>
+      <kotlin.version>1.2.51</kotlin.version>
   </properties>
 
   <dependencyManagement>
@@ -332,7 +333,21 @@
     </dependencies>
   </dependencyManagement>
 
-  <build>
+    <dependencies>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -544,26 +559,50 @@
           <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
         </configuration>
       </plugin>
+        <plugin>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-maven-plugin</artifactId>
+            <version>${kotlin.version}</version>
+            <executions>
+                <execution>
+                    <id>compile</id>
+                    <phase>compile</phase>
+                    <goals>
+                        <goal>compile</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>test-compile</id>
+                    <phase>test-compile</phase>
+                    <goals>
+                        <goal>test-compile</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <jvmTarget>1.8</jvmTarget>
+            </configuration>
+        </plugin>
 
-    <!--TODO(alex): make part of the build and reconcile conflicts
-    <plugin>
-      <groupId>com.ning.maven.plugins</groupId>
-      <artifactId>maven-duplicate-finder-plugin</artifactId>
-      <version>1.0.4</version>
-      <executions>
-        <execution>
-          <id>default</id>
-          <phase>verify</phase>
-          <goals>
-            <goal>check</goal>
-          </goals>
-       </execution>
-      </executions>
-      <configuration>
-        <failBuildInCaseOfConflict>true</failBuildInCaseOfConflict>
-      </configuration>
-    </plugin>
-    -->
+        <!--TODO(alex): make part of the build and reconcile conflicts
+        <plugin>
+          <groupId>com.ning.maven.plugins</groupId>
+          <artifactId>maven-duplicate-finder-plugin</artifactId>
+          <version>1.0.4</version>
+          <executions>
+            <execution>
+              <id>default</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>check</goal>
+              </goals>
+           </execution>
+          </executions>
+          <configuration>
+            <failBuildInCaseOfConflict>true</failBuildInCaseOfConflict>
+          </configuration>
+        </plugin>
+        -->
     </plugins>
 
     <pluginManagement>

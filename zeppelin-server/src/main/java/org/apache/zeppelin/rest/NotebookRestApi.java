@@ -373,7 +373,7 @@ public class NotebookRestApi {
   public Response createNote(String message) throws IOException {
     String user = SecurityUtils.getPrincipal();
     LOG.info("Create new note by JSON {}", message);
-    NewNoteRequest request = NewNoteRequest.fromJson(message);
+    NewNoteRequest request = NewNoteRequest.Companion.fromJson(message);
     AuthenticationInfo subject = new AuthenticationInfo(user);
     Note note = notebook.createNote(subject);
     if (request != null) {
@@ -440,7 +440,7 @@ public class NotebookRestApi {
           throws IOException, CloneNotSupportedException, IllegalArgumentException {
     LOG.info("clone note by JSON {}", message);
     checkIfUserCanWrite(noteId, "Insufficient privileges you cannot clone this note");
-    NewNoteRequest request = NewNoteRequest.fromJson(message);
+    NewNoteRequest request = NewNoteRequest.Companion.fromJson(message);
     String newNoteName = null;
     if (request != null) {
       newNoteName = request.getName();
@@ -471,7 +471,7 @@ public class NotebookRestApi {
     checkIfNoteIsNotNull(note);
     checkIfUserCanWrite(noteId, "Insufficient privileges you cannot add paragraph to this note");
 
-    NewParagraphRequest request = NewParagraphRequest.fromJson(message);
+    NewParagraphRequest request = NewParagraphRequest.Companion.fromJson(message);
     AuthenticationInfo subject = new AuthenticationInfo(user);
     Paragraph p;
     Double indexDouble = request.getIndex();
@@ -877,7 +877,7 @@ public class NotebookRestApi {
           throws IOException, IllegalArgumentException {
     LOG.info("Register cron job note={} request cron msg={}", noteId, message);
 
-    CronRequest request = CronRequest.fromJson(message);
+    CronRequest request = CronRequest.Companion.fromJson(message);
 
     Note note = notebook.getNote(noteId);
     checkIfNoteIsNotNull(note);
@@ -1034,7 +1034,7 @@ public class NotebookRestApi {
     // handle params if presented
     if (!StringUtils.isEmpty(message)) {
       RunParagraphWithParametersRequest request =
-          RunParagraphWithParametersRequest.fromJson(message);
+          RunParagraphWithParametersRequest.Companion.fromJson(message);
       Map<String, Object> paramsForUpdating = request.getParams();
       if (paramsForUpdating != null) {
         paragraph.settings.getParams().putAll(paramsForUpdating);

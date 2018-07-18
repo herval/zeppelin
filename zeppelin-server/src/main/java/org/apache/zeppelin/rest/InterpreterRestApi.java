@@ -120,7 +120,7 @@ public class InterpreterRestApi {
   public Response newSettings(String message) {
     try {
       NewInterpreterSettingRequest request =
-          NewInterpreterSettingRequest.fromJson(message);
+          NewInterpreterSettingRequest.Companion.fromJson(message);
       if (request == null) {
         return new JsonResponse<>(Status.BAD_REQUEST).build();
       }
@@ -145,7 +145,7 @@ public class InterpreterRestApi {
 
     try {
       UpdateInterpreterSettingRequest request =
-          UpdateInterpreterSettingRequest.fromJson(message);
+          UpdateInterpreterSettingRequest.Companion.fromJson(message);
       interpreterSettingManager
           .setPropertyAndRestart(settingId, request.getOption(), request.getProperties(),
               request.getDependencies());
@@ -188,7 +188,7 @@ public class InterpreterRestApi {
 
     InterpreterSetting setting = interpreterSettingManager.get(settingId);
     try {
-      RestartInterpreterRequest request = RestartInterpreterRequest.fromJson(message);
+      RestartInterpreterRequest request = RestartInterpreterRequest.Companion.fromJson(message);
 
       String noteId = request == null ? null : request.getNoteId();
       if (null == noteId) {
@@ -287,7 +287,7 @@ public class InterpreterRestApi {
   @ZeppelinApi
   public Response installInterpreter(@NotNull String message) {
     logger.info("Install interpreter: {}", message);
-    InterpreterInstallationRequest request = InterpreterInstallationRequest.fromJson(message);
+    InterpreterInstallationRequest request = InterpreterInstallationRequest.Companion.fromJson(message);
 
     try {
       interpreterService.installInterpreter(

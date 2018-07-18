@@ -59,7 +59,7 @@ public class LdapRealmTest {
   @Test
   public void testExpandTemplate() {
     assertEquals("uid=foo,cn=users,dc=ods,dc=foo",
-            LdapRealm.expandTemplate("uid={0},cn=users,dc=ods,dc=foo", "foo"));
+            LdapRealm.Companion.expandTemplate("uid={0},cn=users,dc=ods,dc=foo", "foo"));
   }
 
   @Test

@@ -101,21 +101,21 @@ public class NotebookRepoRestApi {
     AuthenticationInfo subject = new AuthenticationInfo(SecurityUtils.getPrincipal());
     NotebookRepoSettingsRequest newSettings;
     try {
-      newSettings = NotebookRepoSettingsRequest.fromJson(payload);
+      newSettings = NotebookRepoSettingsRequest.Companion.fromJson(payload);
     } catch (JsonSyntaxException e) {
       LOG.error("Cannot update notebook repo settings", e);
       return new JsonResponse<>(Status.NOT_ACCEPTABLE, "",
           ImmutableMap.of("error", "Invalid payload structure")).build();
     }
 
-    if (NotebookRepoSettingsRequest.isEmpty(newSettings)) {
+    if (NotebookRepoSettingsRequest.Companion.isEmpty(newSettings)) {
       LOG.error("Invalid property");
       return new JsonResponse<>(Status.NOT_ACCEPTABLE, "",
           ImmutableMap.of("error", "Invalid payload")).build();
     }
     LOG.info("User {} is going to change repo setting", subject.getUser());
     NotebookRepoWithSettings updatedSettings =
-        noteRepos.updateNotebookRepo(newSettings.name, newSettings.settings, subject);
+        noteRepos.updateNotebookRepo(newSettings.getName(), newSettings.getSettings(), subject);
     if (!updatedSettings.isEmpty()) {
       LOG.info("Broadcasting note list to user {}", subject.getUser());
       notebookWsServer.broadcastReloadedNoteList(subject, null);
