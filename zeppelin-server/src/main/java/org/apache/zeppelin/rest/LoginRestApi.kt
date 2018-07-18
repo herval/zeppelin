@@ -63,12 +63,12 @@ class LoginRestApi {
 
     private val jtwRealm: KnoxJwtRealm?
         get() {
-            val realmsList = SecurityUtils.getRealmsList()
+            val realmsList = SecurityUtils.realmsList
             if (realmsList != null) {
                 val iterator = realmsList.iterator()
                 while (iterator.hasNext()) {
                     val realm = iterator.next()
-                    val name = realm.javaClass.getName()
+                    val name = realm!!.javaClass.getName()
 
                     LOG.debug("RealmClass.getName: $name")
 
@@ -82,12 +82,12 @@ class LoginRestApi {
 
     private val isKnoxSSOEnabled: Boolean
         get() {
-            val realmsList = SecurityUtils.getRealmsList()
+            val realmsList = SecurityUtils.realmsList
             if (realmsList != null) {
                 val iterator = realmsList.iterator()
                 while (iterator.hasNext()) {
                     val realm = iterator.next()
-                    val name = realm.javaClass.getName()
+                    val name = realm!!.javaClass.getName()
                     LOG.debug("RealmClass.getName: $name")
                     if (name == "org.apache.zeppelin.realm.jwt.KnoxJwtRealm") {
                         return true
@@ -119,12 +119,12 @@ class LoginRestApi {
             }
             if (response == null) {
                 val data = HashMap<String, String>()
-                data["redirectURL"] = constructKnoxUrl(knoxJwtRealm, knoxJwtRealm.login)
+                data["redirectURL"] = constructKnoxUrl(knoxJwtRealm, knoxJwtRealm.login!!)
                 response = JsonResponse(Status.OK, "", data)
             }
             return response.build()
         }
-        return JsonResponse(Status.METHOD_NOT_ALLOWED).build()
+        return JsonResponse<String>(Status.METHOD_NOT_ALLOWED).build()
     }
 
     private fun proceedToLogin(currentUser: Subject, token: AuthenticationToken): JsonResponse<*>? {
@@ -134,8 +134,8 @@ class LoginRestApi {
             currentUser.getSession(true)
             currentUser.login(token)
 
-            val roles = SecurityUtils.getRoles()
-            val principal = SecurityUtils.getPrincipal()
+            val roles = SecurityUtils.roles
+            val principal = SecurityUtils.principal
             val ticket: String
             if ("anonymous" == principal) {
                 ticket = "anonymous"
@@ -212,7 +212,7 @@ class LoginRestApi {
         if (isKnoxSSOEnabled) {
             val knoxJwtRealm = jtwRealm
             val data = HashMap<String, String>()
-            data["redirectURL"] = constructKnoxUrl(knoxJwtRealm!!, knoxJwtRealm.logout)
+            data["redirectURL"] = constructKnoxUrl(knoxJwtRealm!!, knoxJwtRealm.logout!!)
             data["isLogoutAPI"] = knoxJwtRealm.logoutAPI!!.toString()
             response = JsonResponse(Status.UNAUTHORIZED, "", data)
         } else {
@@ -234,7 +234,7 @@ class LoginRestApi {
 
     private fun logoutCurrentUser() {
         val currentUser = org.apache.shiro.SecurityUtils.getSubject()
-        TicketContainer.instance.removeTicket(SecurityUtils.getPrincipal())
+        TicketContainer.instance.removeTicket(SecurityUtils.principal)
         currentUser.session.stop()
         currentUser.logout()
     }

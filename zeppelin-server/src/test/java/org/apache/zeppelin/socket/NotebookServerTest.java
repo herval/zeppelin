@@ -78,8 +78,8 @@ public class NotebookServerTest extends AbstractTestRestApi {
   public static void init() throws Exception {
     AbstractTestRestApi.startUp(NotebookServerTest.class.getSimpleName());
     gson = new Gson();
-    notebook = ZeppelinServer.notebook;
-    notebookServer = ZeppelinServer.notebookWsServer;
+    notebook = ZeppelinServer.Companion.getNotebook();
+    notebookServer = ZeppelinServer.Companion.getNotebookWsServer();
   }
 
   @AfterClass
@@ -308,7 +308,7 @@ public class NotebookServerTest extends AbstractTestRestApi {
             .put("noteId", "noteId")
             .put("paragraphId", "paragraphId"));
 
-    server.noteSocketMap.put("noteId", asList(conn, otherConn));
+    server.getNoteSocketMap().put("noteId", asList(conn, otherConn));
 
     // When
     server.angularObjectClientBind(conn, new HashSet<String>(), notebook, messageReceived);
@@ -357,7 +357,7 @@ public class NotebookServerTest extends AbstractTestRestApi {
             .put("noteId", "noteId")
             .put("paragraphId", "paragraphId"));
 
-    server.noteSocketMap.put("noteId", asList(conn, otherConn));
+    server.getNoteSocketMap().put("noteId", asList(conn, otherConn));
 
     // When
     server.angularObjectClientBind(conn, new HashSet<String>(), notebook, messageReceived);
@@ -401,7 +401,7 @@ public class NotebookServerTest extends AbstractTestRestApi {
             .put("noteId", "noteId")
             .put("paragraphId", "paragraphId"));
 
-    server.noteSocketMap.put("noteId", asList(conn, otherConn));
+    server.getNoteSocketMap().put("noteId", asList(conn, otherConn));
 
     // When
     server.angularObjectClientUnbind(conn, new HashSet<String>(), notebook, messageReceived);
@@ -448,7 +448,7 @@ public class NotebookServerTest extends AbstractTestRestApi {
             .put("interpreterGroupId", "mdGroup")
             .put("noteId", "noteId")
             .put("paragraphId", "paragraphId"));
-    server.noteSocketMap.put("noteId", asList(conn, otherConn));
+    server.getNoteSocketMap().put("noteId", asList(conn, otherConn));
 
     // When
     server.angularObjectClientUnbind(conn, new HashSet<String>(), notebook, messageReceived);

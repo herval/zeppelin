@@ -65,7 +65,7 @@ class HeliumRestApi(private val helium: Helium, private val notebook: Notebook) 
                 return JsonResponse(Response.Status.OK, "", helium.allPackageInfo).build()
             } catch (e: RuntimeException) {
                 logger.error(e.message, e)
-                return JsonResponse<String>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
+                return JsonResponse<String?>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
             }
 
         }
@@ -81,7 +81,7 @@ class HeliumRestApi(private val helium: Helium, private val notebook: Notebook) 
                 return JsonResponse(Response.Status.OK, "", helium.allEnabledPackages).build()
             } catch (e: RuntimeException) {
                 logger.error(e.message, e)
-                return JsonResponse<String>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
+                return JsonResponse<String?>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
             }
 
         }
@@ -95,7 +95,7 @@ class HeliumRestApi(private val helium: Helium, private val notebook: Notebook) 
                 return JsonResponse(Response.Status.OK, config).build()
             } catch (e: RuntimeException) {
                 logger.error(e.message, e)
-                return JsonResponse<String>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
+                return JsonResponse<String?>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
             }
 
         }
@@ -109,7 +109,7 @@ class HeliumRestApi(private val helium: Helium, private val notebook: Notebook) 
                 return JsonResponse(Response.Status.OK, order).build()
             } catch (e: RuntimeException) {
                 logger.error(e.message, e)
-                return JsonResponse<String>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
+                return JsonResponse<String?>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
             }
 
         }
@@ -130,7 +130,7 @@ class HeliumRestApi(private val helium: Helium, private val notebook: Notebook) 
                     Response.Status.OK, "", helium.getSinglePackageInfo(packageName)).build()
         } catch (e: RuntimeException) {
             logger.error(e.message, e)
-            return JsonResponse<String>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
+            return JsonResponse<String?>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
         }
 
     }
@@ -149,7 +149,7 @@ class HeliumRestApi(private val helium: Helium, private val notebook: Notebook) 
             return JsonResponse<HeliumPackageSuggestion>(Response.Status.OK, "", helium.suggestApp(paragraph)).build()
         } catch (e: RuntimeException) {
             logger.error(e.message, e)
-            return JsonResponse<String>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
+            return JsonResponse<String?>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
         }
 
     }
@@ -170,7 +170,7 @@ class HeliumRestApi(private val helium: Helium, private val notebook: Notebook) 
                     helium.applicationFactory.loadAndRun(pkg, paragraph)).build()
         } catch (e: RuntimeException) {
             logger.error(e.message, e)
-            return JsonResponse<String>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
+            return JsonResponse<String?>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
         }
 
     }
@@ -232,7 +232,7 @@ class HeliumRestApi(private val helium: Helium, private val notebook: Notebook) 
             }
         } catch (e: IOException) {
             logger.error(e.message, e)
-            return JsonResponse<String>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
+            return JsonResponse<String?>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
         }
 
     }
@@ -248,7 +248,7 @@ class HeliumRestApi(private val helium: Helium, private val notebook: Notebook) 
             }
         } catch (e: IOException) {
             logger.error(e.message, e)
-            return JsonResponse<String>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
+            return JsonResponse<String?>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
         }
 
     }
@@ -267,7 +267,7 @@ class HeliumRestApi(private val helium: Helium, private val notebook: Notebook) 
             return JsonResponse(Response.Status.OK, config).build()
         } catch (e: RuntimeException) {
             logger.error(e.message, e)
-            return JsonResponse<String>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
+            return JsonResponse<String?>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
         }
 
     }
@@ -290,7 +290,7 @@ class HeliumRestApi(private val helium: Helium, private val notebook: Notebook) 
             return JsonResponse(Response.Status.OK, config).build()
         } catch (e: RuntimeException) {
             logger.error(e.message, e)
-            return JsonResponse<String>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
+            return JsonResponse<String?>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
         }
 
     }
@@ -314,13 +314,13 @@ class HeliumRestApi(private val helium: Helium, private val notebook: Notebook) 
             return JsonResponse(Response.Status.OK, packageConfig).build()
         } catch (e: JsonParseException) {
             logger.error(e.message, e)
-            return JsonResponse<String>(Response.Status.BAD_REQUEST,
+            return JsonResponse<String?>(Response.Status.BAD_REQUEST,
                     e.message).build()
         } catch (e: IOException) {
-            return JsonResponse<String>(Response.Status.INTERNAL_SERVER_ERROR,
+            return JsonResponse<String?>(Response.Status.INTERNAL_SERVER_ERROR,
                     e.message).build()
         } catch (e: RuntimeException) {
-            return JsonResponse<String>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
+            return JsonResponse<String?>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
         }
 
     }
@@ -337,7 +337,7 @@ class HeliumRestApi(private val helium: Helium, private val notebook: Notebook) 
             return JsonResponse<String>(Response.Status.OK).build()
         } catch (e: IOException) {
             logger.error(e.message, e)
-            return JsonResponse<String>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
+            return JsonResponse<String?>(Response.Status.INTERNAL_SERVER_ERROR, e.message).build()
         }
 
     }

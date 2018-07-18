@@ -14,13 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.zeppelin.socket;
 
-/**
- * NoteboookSocket listener.
- */
-public interface NotebookSocketListener {
-  void onClose(NotebookSocket socket, int code, String message);
-  void onOpen(NotebookSocket socket);
-  void onMessage(NotebookSocket socket, String message);
+package org.apache.zeppelin.socket
+
+interface NotebookServerMBean {
+    val connectedUsers: Set<String>
+
+    fun sendMessage(message: String)
 }

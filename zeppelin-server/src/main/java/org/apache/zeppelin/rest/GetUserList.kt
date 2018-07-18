@@ -57,7 +57,7 @@ class GetUserList {
         if (getIniUser != null) {
             val it = getIniUser.entries.iterator()
             while (it.hasNext()) {
-                val pair = it.next() as Entry<*, *>
+                val pair = it.next()
                 userList.add(pair.key.toString().trim({ it <= ' ' }))
             }
         }
@@ -77,7 +77,7 @@ class GetUserList {
         if (getIniRoles != null) {
             val it = getIniRoles.entries.iterator()
             while (it.hasNext()) {
-                val pair = it.next() as Entry<*, *>
+                val pair = it.next()
                 roleList.add(pair.key.toString().trim({ it <= ' ' }))
             }
         }
@@ -135,7 +135,7 @@ class GetUserList {
             val constraints = SearchControls()
             constraints.searchScope = SearchControls.SUBTREE_SCOPE
             constraints.countLimit = numUsersToFetch.toLong()
-            val attrIDs = arrayOf<String>(userAttribute)
+            val attrIDs = arrayOf<String>(userAttribute!!)
             constraints.returningAttributes = attrIDs
             val result = ctx.search(userSearchRealm, "(&(objectclass=" +
                     userObjectClass + ")("
@@ -176,7 +176,7 @@ class GetUserList {
         if (roles != null) {
             val it = roles.entries.iterator()
             while (it.hasNext()) {
-                val pair = it.next() as Entry<*, *>
+                val pair = it.next()
                 if (LOG.isDebugEnabled) {
                     LOG.debug("RoleKeyValue: " + pair.key +
                             " = " + pair.value)

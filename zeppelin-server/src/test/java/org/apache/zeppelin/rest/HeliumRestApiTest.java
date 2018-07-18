@@ -59,8 +59,8 @@ public class HeliumRestApiTest extends AbstractTestRestApi {
   @Before
   public void setUp() throws IOException {
     HeliumTestRegistry registry = new HeliumTestRegistry("r1", "r1");
-    ZeppelinServer.helium.clear();
-    ZeppelinServer.helium.addRegistry(registry);
+    ZeppelinServer.Companion.getHelium().clear();
+    ZeppelinServer.Companion.getHelium().addRegistry(registry);
 
     registry.add(new HeliumPackage(
                 HeliumType.APPLICATION,
@@ -85,7 +85,7 @@ public class HeliumRestApiTest extends AbstractTestRestApi {
 
   @After
   public void tearDown() {
-    ZeppelinServer.helium.clear();
+    ZeppelinServer.Companion.getHelium().clear();
   }
 
   @Test
@@ -112,7 +112,7 @@ public class HeliumRestApiTest extends AbstractTestRestApi {
     assertEquals(body1.size(), 0);
 
     // Enable "name1" package
-    ZeppelinServer.helium.enable("name1", "artifact1");
+    ZeppelinServer.Companion.getHelium().enable("name1", "artifact1");
 
     GetMethod get2 = httpGet("/helium/enabledPackage");
     assertThat(get2, isAllowed());
@@ -196,7 +196,7 @@ public class HeliumRestApiTest extends AbstractTestRestApi {
     assertEquals(body1.size(), 0);
 
     //We assume allPackages list has been refreshed before sorting
-    ZeppelinServer.helium.getAllPackageInfo();
+    ZeppelinServer.Companion.getHelium().getAllPackageInfo();
 
     String postRequestJson = "[name2, name1]";
     PostMethod post = httpPost("/helium/order/visualization", postRequestJson);

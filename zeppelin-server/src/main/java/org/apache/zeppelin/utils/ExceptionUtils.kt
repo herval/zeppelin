@@ -14,17 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.zeppelin.server;
+package org.apache.zeppelin.utils
 
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
+import javax.ws.rs.core.Response.Status
 
-public class JsonExclusionStrategy implements ExclusionStrategy {
-  public boolean shouldSkipClass(Class<?> arg0) {
-    return false;
-  }
+import org.apache.zeppelin.server.JsonResponse
 
-  public boolean shouldSkipField(FieldAttributes f) {
-    return false;
-  }
+/**
+ * Utility method for exception in rest api.
+ *
+ */
+object ExceptionUtils {
+
+    fun jsonResponse(status: Status): javax.ws.rs.core.Response {
+        return JsonResponse<Any>(status).build()
+    }
+
+    fun jsonResponseContent(status: Status, message: String): javax.ws.rs.core.Response {
+        return JsonResponse<Any>(status, message).build()
+    }
 }

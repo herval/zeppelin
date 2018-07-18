@@ -68,8 +68,8 @@ class SecurityRestApi {
     @ZeppelinApi
     fun ticket(): Response {
         val conf = ZeppelinConfiguration.create()
-        val principal = SecurityUtils.getPrincipal()
-        val roles = SecurityUtils.getRoles()
+        val principal = SecurityUtils.principal
+        val roles = SecurityUtils.roles
         val response: JsonResponse<*>
         // ticket set to anonymous for anonymous user. Simplify testing.
         val ticket: String
@@ -105,7 +105,7 @@ class SecurityRestApi {
         val rolesList = ArrayList<String>()
         try {
             val getUserListObj = GetUserList()
-            val realmsList = SecurityUtils.getRealmsList()
+            val realmsList = SecurityUtils.realmsList
             if (realmsList != null) {
                 val iterator = realmsList.iterator()
                 while (iterator.hasNext()) {

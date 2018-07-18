@@ -14,23 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.zeppelin.utils;
 
-import javax.ws.rs.core.Response.Status;
+package org.apache.zeppelin.socket
 
-import org.apache.zeppelin.server.JsonResponse;
+/** This will be used by some services to pass messages to frontend via WebSocket  */
+interface ServiceCallback {
+    fun onStart(message: String)
 
-/**
- * Utility method for exception in rest api.
- *
- */
-public class ExceptionUtils {
+    fun onSuccess(message: String)
 
-  public static javax.ws.rs.core.Response jsonResponse(Status status) {
-    return new JsonResponse<>(status).build();
-  }
-  
-  public static javax.ws.rs.core.Response jsonResponseContent(Status status, String message) {
-    return new JsonResponse<>(status, message).build();
-  }
+    fun onFailure(message: String)
 }

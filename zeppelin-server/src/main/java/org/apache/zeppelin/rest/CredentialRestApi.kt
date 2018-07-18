@@ -85,7 +85,7 @@ class CredentialRestApi {
             return JsonResponse<String>(Status.BAD_REQUEST).build()
         }
 
-        val user = SecurityUtils.getPrincipal()
+        val user = SecurityUtils.principal
         logger.info("Update credentials for user {} entity {}", user, entity)
         val uc = credentials!!.getUserCredentials(user)
         uc.putUsernamePassword(entity, UsernamePassword(username, password))
@@ -104,7 +104,7 @@ class CredentialRestApi {
     @GET
     @Throws(IOException::class, IllegalArgumentException::class)
     fun getCredentials(message: String): Response {
-        val user = SecurityUtils.getPrincipal()
+        val user = SecurityUtils.principal
         logger.info("getCredentials credentials for user {} ", user)
         val uc = credentials!!.getUserCredentials(user)
         return JsonResponse(Status.OK, uc).build()
@@ -121,7 +121,7 @@ class CredentialRestApi {
     @DELETE
     @Throws(IOException::class, IllegalArgumentException::class)
     fun removeCredentials(message: String): Response {
-        val user = SecurityUtils.getPrincipal()
+        val user = SecurityUtils.principal
         logger.info("removeCredentials credentials for user {} ", user)
         val uc = credentials!!.removeUserCredentials(user) ?: return JsonResponse<String>(Status.NOT_FOUND).build()
         return JsonResponse<String>(Status.OK).build()
@@ -139,7 +139,7 @@ class CredentialRestApi {
     @Path("{entity}")
     @Throws(IOException::class, IllegalArgumentException::class)
     fun removeCredentialEntity(@PathParam("entity") entity: String): Response {
-        val user = SecurityUtils.getPrincipal()
+        val user = SecurityUtils.principal
         logger.info("removeCredentialEntity for user {} entity {}", user, entity)
         return if (credentials!!.removeCredentialEntity(user, entity) == false) {
             JsonResponse<String>(Status.NOT_FOUND).build()

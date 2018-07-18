@@ -158,7 +158,7 @@ public abstract class AbstractTestRestApi {
     @Override
     public void run() {
       try {
-        ZeppelinServer.main(new String[]{""});
+        ZeppelinServer.Companion.main(new String[]{""});
       } catch (Exception e) {
         LOG.error("Exception in WebDriverManager while getWebDriver ", e);
         throw new RuntimeException(e);
@@ -278,20 +278,20 @@ public abstract class AbstractTestRestApi {
   }
 
   protected static void shutDown(final boolean deleteConfDir) throws Exception {
-    if (!WAS_RUNNING && ZeppelinServer.notebook != null) {
+    if (!WAS_RUNNING && ZeppelinServer.Companion.getNotebook() != null) {
       // restart interpreter to stop all interpreter processes
-      List<InterpreterSetting> settingList = ZeppelinServer.notebook.getInterpreterSettingManager()
+      List<InterpreterSetting> settingList = ZeppelinServer.Companion.getNotebook().getInterpreterSettingManager()
               .get();
-      if (!ZeppelinServer.notebook.getConf().isRecoveryEnabled()) {
+      if (!ZeppelinServer.Companion.getNotebook().getConf().isRecoveryEnabled()) {
         for (InterpreterSetting setting : settingList) {
-          ZeppelinServer.notebook.getInterpreterSettingManager().restart(setting.getId());
+          ZeppelinServer.Companion.getNotebook().getInterpreterSettingManager().restart(setting.getId());
         }
       }
       if (shiroIni != null) {
         FileUtils.deleteQuietly(shiroIni);
       }
       LOG.info("Terminating test Zeppelin...");
-      ZeppelinServer.jettyWebServer.stop();
+      ZeppelinServer.Companion.getJettyWebServer().stop();
       executor.shutdown();
       PluginManager.reset();
 
@@ -317,7 +317,7 @@ public abstract class AbstractTestRestApi {
             .clearProperty(ZeppelinConfiguration.ConfVars.ZEPPELIN_ANONYMOUS_ALLOWED.getVarName());
       }
 
-      if (deleteConfDir && !ZeppelinServer.notebook.getConf().isRecoveryEnabled()) {
+      if (deleteConfDir && !ZeppelinServer.Companion.getNotebook().getConf().isRecoveryEnabled()) {
         // don't delete interpreter.json when recovery is enabled. otherwise the interpreter setting
         // id will change after zeppelin restart, then we can not recover interpreter process
         // properly

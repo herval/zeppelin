@@ -15,17 +15,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.zeppelin.realm.jwt;
+package org.apache.zeppelin.realm.jwt
 
 /***
- * {@link System}.
+ * [System].
  */
-public class PrincipalMappingException extends Exception {
-  public PrincipalMappingException(String message) {
-    super(message);
-  }
+class PrincipalMappingException : Exception {
+    constructor(message: String) : super(message) {}
 
-  public PrincipalMappingException(String message, Exception e) {
-    super(message, e);
-  }
+    constructor(message: String, e: Exception) : super(message, e) {}
 }

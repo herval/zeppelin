@@ -14,28 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.zeppelin.utils;
+package org.apache.zeppelin.utils
 
-import java.util.Locale;
+import java.util.Locale
 
-import org.apache.zeppelin.util.Util;
+import org.apache.zeppelin.util.Util
 
 /**
  * CommandLine Support Class.
  */
-public class CommandLineUtils {
-  public static void main(String[] args) {
-    if (args.length == 0) {
-      return;
-    }
+object CommandLineUtils {
+    @JvmStatic
+    fun main(args: Array<String>) {
+        if (args.size == 0) {
+            return
+        }
 
-    String usage = args[0].toLowerCase(Locale.US);
-    switch (usage) {
-      case "--version":
-      case "-v":
-        System.out.println(Util.getVersion());
-        break;
-      default:
+        val usage = args[0].toLowerCase(Locale.US)
+        when (usage) {
+            "--version", "-v" -> println(Util.getVersion())
+        }
     }
-  }
 }

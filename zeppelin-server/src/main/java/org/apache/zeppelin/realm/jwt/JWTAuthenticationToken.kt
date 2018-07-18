@@ -14,45 +14,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.zeppelin.realm.jwt;
+package org.apache.zeppelin.realm.jwt
 
-import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.AuthenticationToken
 
 /**
  * Created for org.apache.zeppelin.server.
  */
-public class JWTAuthenticationToken implements AuthenticationToken {
-  private Object userId;
-  private String token;
+class JWTAuthenticationToken(userId: Any?, var token: String?) : AuthenticationToken {
+    var userId: Any? = null
+        private set
 
-  public JWTAuthenticationToken(Object userId, String token) {
-    this.userId = userId;
-    this.token = token;
-  }
+    init {
+        this.userId = userId
+    }
 
-  @Override
-  public Object getPrincipal() {
-    return getUserId();
-  }
+    override fun getPrincipal(): Any? {
+        return userId
+    }
 
-  @Override
-  public Object getCredentials() {
-    return getToken();
-  }
+    override fun getCredentials(): Any? {
+        return token
+    }
 
-  public Object getUserId() {
-    return userId;
-  }
-
-  public void setUserId(long userId) {
-    this.userId = userId;
-  }
-
-  public String getToken() {
-    return token;
-  }
-
-  public void setToken(String token) {
-    this.token = token;
-  }
+    fun setUserId(userId: Long) {
+        this.userId = userId
+    }
 }

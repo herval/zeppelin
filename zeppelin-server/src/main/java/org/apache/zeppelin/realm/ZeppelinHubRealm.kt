@@ -219,7 +219,7 @@ class ZeppelinHubRealm : AuthorizingRealm() {
         /* TODO(xxx): add proper roles */
         val userAndRoles = HashSet<String>()
         userAndRoles.add(username)
-        ZeppelinServer.notebookWsServer.broadcastReloadedNoteList(
+        ZeppelinServer.notebookWsServer!!.broadcastReloadedNoteList(
                 org.apache.zeppelin.user.AuthenticationInfo(username), userAndRoles)
 
         ZeppelinhubUtils.userLoginRoutine(username)

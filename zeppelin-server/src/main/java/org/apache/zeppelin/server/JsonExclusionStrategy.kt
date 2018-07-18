@@ -14,26 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.zeppelin.types;
+package org.apache.zeppelin.server
 
-import java.util.List;
+import com.google.gson.ExclusionStrategy
+import com.google.gson.FieldAttributes
 
-import org.apache.zeppelin.interpreter.InterpreterInfo;
+class JsonExclusionStrategy : ExclusionStrategy {
+    override fun shouldSkipClass(arg0: Class<*>): Boolean {
+        return false
+    }
 
-/**
- * InterpreterSetting information for binding.
- */
-public class InterpreterSettingsList {
-  private String id;
-  private String name;
-  private boolean selected;
-  private List<InterpreterInfo> interpreters;
-
-  public InterpreterSettingsList(String id, String name,
-      List<InterpreterInfo> interpreters, boolean selected) {
-    this.id = id;
-    this.name = name;
-    this.interpreters = interpreters;
-    this.selected = selected;
-  }
+    override fun shouldSkipField(f: FieldAttributes): Boolean {
+        return false
+    }
 }

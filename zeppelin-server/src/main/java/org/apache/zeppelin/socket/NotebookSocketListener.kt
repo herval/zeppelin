@@ -14,14 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.apache.zeppelin.socket
 
-package org.apache.zeppelin.socket;
-
-/** This will be used by some services to pass messages to frontend via WebSocket */
-public interface ServiceCallback {
-  void onStart(String message);
-
-  void onSuccess(String message);
-
-  void onFailure(String message);
+/**
+ * NoteboookSocket listener.
+ */
+interface NotebookSocketListener {
+    fun onClose(socket: NotebookSocket, code: Int, message: String)
+    fun onOpen(socket: NotebookSocket)
+    fun onMessage(socket: NotebookSocket, message: String)
 }

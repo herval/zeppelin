@@ -14,13 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.apache.zeppelin.types
 
-package org.apache.zeppelin.socket;
+import org.apache.zeppelin.interpreter.InterpreterInfo
 
-import java.util.Set;
-
-public interface NotebookServerMBean {
-  Set<String> getConnectedUsers();
-
-  void sendMessage(String message);
-}
+/**
+ * InterpreterSetting information for binding.
+ */
+class InterpreterSettingsList(private val id: String, private val name: String,
+                              private val interpreters: List<InterpreterInfo>, private val selected: Boolean)
